@@ -1,0 +1,372 @@
+
+
+<link rel="stylesheet" href="/jQuery-File-Upload-9.12.3/css/jquery.fileupload.css">
+
+
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){	
+	$("#frmPosting").validate({
+		rules: {
+			title: "required",
+			city_id: "required",
+			district_id: "required",
+			content: "required",
+			contact_fullname: "required",
+			contact_phone: "required",
+			contact_email: "required"
+		},
+		messages: {
+			title: "Vui lòng nhập thông tin",
+			city_id: "Vui lòng chọn thông tin",
+			district_id: "Vui lòng chọn thông tin",
+			content: "Vui lòng nhập thông tin",
+			contact_fullname: "Vui lòng nhập thông tin",
+			contact_phone: "Vui lòng nhập thông tin",
+			contact_email: "Vui lòng nhập thông tin"
+		}
+	});
+});
+</script>
+
+<div class="row">
+	
+	<?php echo $this->render('profile/index/menu.phtml'); ?>
+  
+  <div class="col-lg-9 col-md-9 col-sm-12">
+  	<div class="panel panel-default">
+    	<div class="panel-heading">
+      	<h4 class="panel-title">
+          Đăng tin
+       	</h4>
+      </div>
+			<div class="panel-body">
+      	<form name="frmPosting" id="frmPosting" class="form-horizontal" method="post" enctype="multipart/form-data">
+       		<fieldset>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Loại tin: </label>
+              <div class="col-sm-8">
+                <?php 
+                  echo $this->formSelect($oForm->get('type'));
+                ?>
+              </div>
+            </div>
+            
+            <div class="form-group required">
+              <label class="col-sm-3 control-label">Tiêu đề <sup>*</sup>: </label>
+              <div class="col-sm-8">
+                <?php 
+                  echo $this->formInput($oForm->get('title'));
+                  echo $this->formElementErrors($oForm->get('title'), array('class' => 'help-block inline error')); 
+                ?>
+              </div>
+            </div>
+            
+            <div class="form-group required">
+              <label class="col-sm-3 control-label">Khu vực <sup>*</sup>: </label>
+              <div class="col-sm-4">
+                <?php 
+                  echo $this->formSelect($oForm->get('city_id'));
+                  echo $this->formElementErrors($oForm->get('city_id'), array('class' => 'help-block inline error')); 
+                ?>
+              </div>
+              <div class="col-sm-4">                
+                <?php 
+									echo $this->partial(
+										'layout/select.phtml', 
+										array(
+											'name' => 'district_id',
+											'id' => 'district_id',
+											'class' => 'form-control',
+											'default' => '0', 
+											'default_name' => ' -- Quận -- ',
+											'selected' => 0,
+											'aData' => array()
+										)
+									); 
+								?>             
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Dự án căn hộ : </label>
+              <div class="col-sm-8">
+                <?php 
+									echo $this->partial(
+										'layout/select.phtml', 
+										array(
+											'name' => 'apartment_id',
+											'id' => 'apartment_id',
+											'class' => 'form-control',
+											'default' => '0', 
+											'default_name' => ' -- Dự án -- ',
+											'selected' => 0,
+											'aData' => array()
+										)
+									); 
+								?>        
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Địa chỉ </label>
+              <div class="col-sm-8">
+                <?php 
+                  echo $this->formInput($oForm->get('address'));
+                ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Giá </label>
+              <div class="col-sm-4">
+            		<div class="input-group">
+									  <input type="text" placeholder="1.2" name="price" class="form-control">
+									  <span class="input-group-btn">
+                      <select name="price_type" class="form-control" style="min-width:120px;">
+                        <option value="0">Thỏa thuận</option>
+                        <option value="1">Tỷ</option>
+                        <option value="2">Trăm triệu</option>
+                      </select>
+									  </span>
+									</div>
+             		</div>
+          		</div>
+         		</fieldset>
+            
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Diện tích </label>
+              <div class="col-sm-4">
+              	<div class="input-group">
+                	<input type="text" class="form-control"><span class="input-group-addon">m²</span>
+              	</div>
+              	
+              </div>
+            </div>
+            
+            
+            <div class="content-subheading"> 
+            	<i class="fa fa fa-file-word-o"></i>
+              <strong>Thông tin mô tả <sup style="color:#F00">*</sup></strong>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label"></label>
+              <div class="col-sm-8">
+                <?php 
+                  echo $this->formTextarea($oForm->get('content'));
+                ?>
+              </div>
+            </div>
+            
+            <div class="content-subheading"> 
+            	<i class="fa fa-file-image-o"></i>
+              <strong>Hình ảnh</strong>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-3">
+              	<span class="btn btn-success fileinput-button">
+                  <i class="glyphicon glyphicon-plus"></i>
+                  <span>Thêm hình ảnh...</span>
+                  <input type="file" name="files[]" multiple="multiple" />
+								</span>
+                <p class="help-block">Tin rao có ảnh sẽ được xem nhiều hơn</p>
+              </div>
+              <div class="col-sm-8">
+              	
+                
+                      
+               	<table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+                
+              </div>
+            </div>
+            
+            <div class="content-subheading">
+              <i class="fa fa-user"></i> 
+              <strong>Thông tin liên hệ</strong>
+            </div>
+  
+            <div class="form-group">
+              <label class="col-sm-3 control-label"> Họ tên <sup style="color:#F00">*</sup>: </label>
+              <div class="col-sm-8">
+                <?php 
+                  echo $this->formInput($oForm->get('contact_fullname')->setValue($infoAccount['fullname']));
+                ?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label"> Điện thoại <sup style="color:#F00">*</sup>: </label>
+              <div class="col-sm-8">
+                <?php 
+                  echo $this->formInput($oForm->get('contact_phone')->setValue($infoAccount['phone']));
+                ?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Email <sup style="color:#F00">*</sup>: </label>
+              <div class="col-sm-8">
+                <?php 
+                  echo $this->formInput($oForm->get('contact_email')->setValue($infoAccount['email']));
+                ?>
+              </div>
+            </div>
+            
+            <div class="form-group form-actions">
+              <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="fa fa-check bigger-110"></i>
+                  Đăng tin
+                </button>
+                <input type="hidden" name="city_name" value="" />
+                <input type="hidden" name="district_name" value="" />
+                <input type="hidden" name="apartment_name" value="" />
+              </div>
+            </div>
+        	</fieldset>
+        </form>
+        
+      </div>
+  	</div>
+	</div>
+  
+</div>
+
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+	<tr class="template-upload fade">
+		<td>
+			<span class="preview"></span>
+		</td>
+		<td>
+			<p class="size">Processing...</p>
+		</td>
+		<td>
+			{% if (!i) { %}
+				<button class="btn btn-warning cancel">
+					<i class="glyphicon glyphicon-ban-circle"></i>
+					<span>Hủy</span>
+				</button>
+			{% } %}
+		</td>
+	</tr>
+{% } %}
+</script>
+
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {% if (file.url) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                {% } else { %}
+                    <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+
+<script src="/jQuery-File-Upload-9.12.3/js/vendor/jquery.ui.widget.js"></script>
+<script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+
+
+
+<script src="/jQuery-File-Upload-9.12.3/js/jquery.iframe-transport.js"></script>
+<script src="/jQuery-File-Upload-9.12.3/js/jquery.fileupload.js"></script>
+<script src="/jQuery-File-Upload-9.12.3/js/jquery.fileupload-process.js"></script>
+<script src="/jQuery-File-Upload-9.12.3/js/jquery.fileupload-image.js"></script>
+<script src="/jQuery-File-Upload-9.12.3/js/jquery.fileupload-validate.js"></script>
+<script src="/jQuery-File-Upload-9.12.3/js/jquery.fileupload-ui.js"></script>
+
+
+
+<script type="text/javascript">
+
+$(function () {
+	$('#frmPosting').fileupload({
+		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+		maxFileSize: 10000000, // 10 MB
+		maxNumberOfFiles: 10,
+	});
+
+	
+
+});
+
+
+
+
+
+$(document).ready(function(){
+
+	$('form[name="frmPosting"] select[name="city_id"]').change(function() {
+  	var city_id = $(this).val();
+		if (city_id > 0) {
+			optionDistrict(city_id, 0);
+		}
+	});
+	
+	$('form[name="frmPosting"] select[name="district_id"]').change(function() {
+		var city_id = $("select#city_id").val();
+  	var district_id = $(this).val();
+		if (city_id > 0 && district_id > 0) {
+			getApartmentData(city_id, district_id);
+		}
+	});
+	
+});
+
+function getApartmentData(city_id, district_id)
+{
+	if ( city_id > 0 ) {
+		$.ajax({
+			url: "/apartment/option?city_id=" + city_id +"&district_id=" + district_id,
+			dataType: "json",
+			method: "GET",
+		}).done(function( data ) {
+			$("select#apartment_id").html('<option value="">-- Dự án --</option>');
+			$.each( data, function(index, row) {
+				$("select#apartment_id").append('<option value="'+ row.id +'">'+ row.name +'</option>');
+  		});
+			
+		});
+	}
+}
+</script>

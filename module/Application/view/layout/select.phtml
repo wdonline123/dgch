@@ -1,0 +1,18 @@
+<?php 
+	$sName 		= isset($name) ? trim($name) : '';
+	$sClass 	= isset($class) ? trim($class) : '';
+	$sId 			= isset($id) ? trim($id) : '';
+?>
+
+<select name="<?php echo $sName;?>" id="<?php echo $sId;?>" class="<?php echo $sClass;?>">
+	<?php if ( isset($default) ) : ?>
+  	<option <?php if ($selected == $default): ?>selected="selected"<?php endif;?> value="<?php echo $default;?>">
+    	<?php echo $default_name;?>
+   	</option>
+  <?php endif; ?>
+  <?php foreach ($aData as $key => $val) : ?>
+    <option <?php if ($selected == $key): ?>selected="selected"<?php endif;?> value="<?php echo $key;?>">
+      <?php echo $val;?>
+    </option>
+  <?php endforeach; ?>
+</select>

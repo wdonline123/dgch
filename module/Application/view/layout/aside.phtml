@@ -1,0 +1,36 @@
+<script src="/js/angular/apartment.js" type="text/javascript"></script>
+
+<div class="col-md-3 no-padding-left hidden-sm hidden-xs" >
+  <div class="panel panel-default" ng-app="apartmentApp">
+  	<div class="panel-heading">
+    	<h4 class="panel-title">Xem nhiều</h4>
+    </div>
+
+    <div class="panel-body" ng-controller="apartmentList">
+    
+    	<ul class="list-unstyled">
+      	<li class="most-view-item" ng-repeat="apartment in aApartment">
+    	
+       		<div class="row">
+            <div class="col-md-6 col-sm-6">
+              <a href="{{apartment.url}}">
+                <img class="img-responsive" src="{{apartment.picture}} ">
+              </a>
+            </div>
+            <div class="col-md-6 col-sm-6 no-padding-left">
+              <h5 class="post-title no-margin-top">
+                <a href="{{apartment.url}}">
+                  {{apartment.name}} 
+                </a>
+              </h5>
+            </div>
+            
+        	</div>	
+      		<hr />
+       	</li>
+   		</ul>	
+      
+    </div>
+  </div>
+  
+</div>

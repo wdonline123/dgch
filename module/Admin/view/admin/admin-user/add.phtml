@@ -1,0 +1,92 @@
+<div class="page-content">
+	<div class="row">
+    <div class="col-xs-12">
+    	<div class="page-header">
+        <h1><?php echo $this->translate('Add information'); ?></h1>
+      </div>
+      
+      <form method="post" class="form-horizontal" autocomplete="off">
+      	<div class="form-group">
+        	<label class="col-sm-3 control-label no-padding-right"> 
+          	<b class="red">*</b> <?php echo $this->translate('Fullname'); ?>: 
+        	</label>
+          <div class="col-sm-9">
+          	<?php echo $this->formInput($oForm->get('fullname')) ?>
+						<?php 
+            	echo $this->formElementErrors($oForm->get('fullname'), array('class' => 'help-block inline error')); 
+            ?>
+          </div>
+        </div>
+      	<div class="form-group">
+        	<label class="col-sm-3 control-label no-padding-right"> 
+          	<b class="red">*</b> <?php echo $this->translate('Username'); ?>: 
+         	</label>
+          <div class="col-sm-9">
+          	<?php echo $this->formInput($oForm->get('username')) ?>
+						<?php 
+            	echo $this->formElementErrors($oForm->get('username'), array('class' => 'help-block inline error')); 
+            ?>
+          </div>
+        </div>
+       
+        <div class="form-group">
+        	<label class="col-sm-3 control-label no-padding-right"> 
+          	<b class="red">*</b> <?php echo $this->translate('Password'); ?>: 
+         	</label>
+          <div class="col-sm-9">
+          	<?php echo $this->formInput($oForm->get('password')) ?>
+						<?php 
+            	echo $this->formElementErrors($oForm->get('password'), array('class' => 'help-block inline error')); 
+            ?>
+          </div>
+        </div>
+        <div class="form-group">
+        	<label class="col-sm-3 control-label no-padding-right"> 
+          	<b class="red">*</b> <?php echo $this->translate('Retype password'); ?>: 
+         	</label>
+          <div class="col-sm-9">
+          	<?php echo $this->formInput($oForm->get('retype-password')) ?>
+						<?php 
+            	echo $this->formElementErrors($oForm->get('retype-password'), array('class' => 'help-block inline error')); 
+            ?>
+          </div>
+        </div>
+        <div class="form-group">
+        	<label class="col-sm-3 control-label no-padding-right"> <b class="red">*</b> Email: </label>
+          <div class="col-sm-9">
+          	<?php echo $this->formInput($oForm->get('email')) ?>
+						<?php 
+							echo $this->formElementErrors($oForm->get('email'), array('class' => 'help-block inline error')); 
+            ?>
+          </div>
+        </div>
+        
+        <div class="form-group">
+        	<label class="col-sm-3 control-label no-padding-right"> 
+          	<b class="red">*</b> <?php echo $this->translate('Group'); ?>: 
+         	</label>
+          <div class="col-sm-9">
+            <?php echo $this->formSelect($oForm->get('group_id')) ?>
+						<?php 
+            	echo $this->formElementErrors($oForm->get('group_id'), array('class' => 'help-block inline error')); 
+            ?>
+          </div>
+        </div>
+        
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-3 col-md-9">
+          	<button type="submit" class="btn btn-info">
+          		<i class="ali-icon fa fa-check bigger-110"></i>
+          		<?php echo $this->translate('Save'); ?>
+          	</button>
+          	&nbsp; &nbsp; &nbsp;
+          	<button type="reset" class="btn">
+          		<i class="ali-icon fa fa-undo bigger-110"></i>
+          		Reset
+          	</button>
+          </div>
+        </div>
+      </form>
+  	</div>
+	</div>
+</div>

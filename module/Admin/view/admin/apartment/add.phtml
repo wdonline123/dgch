@@ -1,0 +1,106 @@
+<script type="text/javascript" src="/tinymce/jquery.tinymce.min.js"></script>
+<script type="text/javascript" src="/tinymce/tinymce.min.js"></script>
+
+<script>
+tinymce.init({
+	selector: "textarea#introduction",
+	height: 200,
+}); 
+
+tinymce.init({
+	selector: "textarea#utility",
+	height: 200,
+}); 
+</script>
+
+<div class="page-content">
+	<div class="row">
+    <div class="col-xs-12">
+    	<div class="page-header">
+        <h1><?php echo $this->translate('Add Information'); ?></h1>
+      </div>
+      
+      <form name="frmApartment" method="post" class="form-horizontal" autocomplete="off">
+        
+      	<div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"> <b class="red">*</b> <?php echo $this->translate('Name'); ?>: </label>
+          <div class="col-sm-10">
+          	<?php echo $this->formInput($oForm->get('name')) ?>
+						<?php 
+            	echo $this->formElementErrors($oForm->get('name'), array('class' => 'help-block inline error')); 
+            ?>
+          </div>
+        </div>
+        
+        <div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"> <b class="red">*</b> <?php echo $this->translate('Position'); ?>: </label>
+          <div class="col-sm-10">
+          	<?php echo $this->formInput($oForm->get('position')) ?>
+						<?php 
+            	echo $this->formElementErrors($oForm->get('position'), array('class' => 'help-block inline error')); 
+            ?>
+          </div>
+        </div>
+        
+        <div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"><?php echo $this->translate('Location'); ?>: </label>
+          <div class="col-sm-10">
+						<?php echo $this->formSelect($oForm->get('city')) ?>
+            <?php echo $this->formSelect($oForm->get('district')) ?>
+          </div>
+        </div>
+        
+        <div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"> <?php echo $this->translate('Introduction'); ?>: </label>
+          <div class="col-sm-10">
+          	<?php echo $this->formTextarea($oForm->get('introduction')) ?>
+          </div>
+        </div>
+        
+        <div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"> <?php echo $this->translate('Utility'); ?>: </label>
+          <div class="col-sm-10">
+          	<?php echo $this->formTextarea($oForm->get('utility')) ?>
+          </div>
+        </div>
+
+        <div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"> <?php echo $this->translate('Price'); ?>: </label>
+          <div class="col-sm-10">
+						<?php echo $this->formInput($oForm->get('min_price')) ?>
+            <?php echo $this->formInput($oForm->get('max_price')) ?>
+          </div>
+        </div>
+        
+        <div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"><?php echo $this->translate('Type'); ?>: </label>
+          <div class="col-sm-10">
+						<?php echo $this->formSelect($oForm->get('type')) ?>
+          </div>
+        </div>
+
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-2 col-md-10">
+          	<button type="submit" class="btn btn-info">
+          		<i class="ali-icon fa fa-check bigger-110"></i>
+          		Save
+          	</button>
+          </div>
+        </div>
+      </form>
+  	</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="/js/common.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('form[name="frmApartment"] select[name="city"]').change(function() {
+  	var city_id = $(this).val();
+		if (city_id > 0) {
+			optionDistrict();
+		}
+	});
+});
+</script>

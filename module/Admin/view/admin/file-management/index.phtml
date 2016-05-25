@@ -1,0 +1,176 @@
+<div class="row">
+	<div class="col-sm-12" style="border-bottom:1px solid #dddddd;">
+		<ul class="list-inline">
+    	<li>
+        <a href="javascript:;" onclick="fmShowCreateFolder()">
+          <i class="fa fa-folder orange"></i>
+          Create folder
+        </a>
+    	</li>
+      <li>
+        <a href="javascript:;" onclick="fmShowUpload()">
+          <i class="fa fa-plus-square-o orange"></i>
+          Upload
+        </a>
+    	</li>
+  	</ul>
+  </div>
+</div>
+<div class="row" id="fm-page-content"></div>
+
+
+<input type="hidden" id="fm-folder-curent" value="" />
+
+
+<!-- Form Create Folder -->
+<div class="modal" id="fm-page-create-folder">
+  <div class="modal-dialog">
+    <div class="modal-content">    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Create Folder</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="fmFormFolder" name="fmFormFolder" class="form-inline" action="/admin/file-management/create-folder" method="post">
+          <div class="form-group">
+          	<label for="email">Folder name :</label>
+          	<input type="text" name="folder_name" class="form-control" />
+        	</div>
+          <input type="submit" value=" Create " class="btn btn-default btn-sm" />
+          <input type="hidden" name="current_folder" value="" />
+				</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Upload Image -->
+<div class="modal" id="fm-page-upload">
+  <div class="modal-dialog">
+    <div class="modal-content">    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Upload</h4>
+      </div>
+      <div class="modal-body">
+      	<form id="fmFormUpload" name="fmFormUpload" class="form-inline" action="/admin/file-management/upload" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+          	<input type="file" name="picture" />
+        	</div>
+          <input type="submit" value=" Upload " class="btn btn-default btn-sm" />
+          <input type="hidden" name="current_folder" value="" />
+				</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<?php 
+	echo $this->inlineScript()->prependFile($this->basePath() . '/js/jquery.form.min.js');
+?>
+    
+<script type="text/javascript">
+
+$(document).ready(function() {
+	getContent(); 
+}); 
+
+
+/*** Upload ***/
+function fmShowUpload(){	
+	$('#fm-page-upload').modal();
+}
+
+function fmCloseUpload() {
+	$('#fm-page-upload').modal('toggle');
+}
+
+$('#fmFormUpload').ajaxForm({
+	onsubmit: function(event) {
+	},
+	success: function(data, textStatus, jqXHR) {
+		fmCloseUpload()
+		getContent(); 			
+	},
+	error: function(jqXHR, textStatus, errorThrown) {
+		alert(errorThrown);
+	}
+});
+
+
+/*** Folder ***/
+function fmShowCreateFolder(){	
+	$('#fm-page-create-folder').modal();
+}
+
+function fmCloseCreateFolder() {
+	$('#fm-page-create-folder').modal('toggle');
+}
+
+$('#fmFormFolder').ajaxForm({
+	beforeSubmit: function() {
+	},
+	success: function(data, textStatus, jqXHR) {
+		fmCloseCreateFolder();
+		getContent(); 		
+	},
+	error: function(jqXHR, textStatus, errorThrown) {
+		alert("Error");
+	}
+});
+
+
+/*** Content ***/
+function getContent()
+{
+	var folder_current = $("#fm-folder-curent").val();
+	$.ajax({
+		url: "/admin/file-management/content?folder=" + folder_current,
+		method: "GET",
+		dataType:"html"
+	}).done(function(data) {
+		$('#fm-page-content').html(data); 
+		setCurrentFolder();
+	});			
+	//alert(folder_current);
+}
+
+function setCurrentFolder()
+{
+	var folder_current = $("#fm-folder-curent").val();
+	document.fmFormFolder.current_folder.value = folder_current;
+	document.fmFormUpload.current_folder.value = folder_current;
+}
+
+
+function fmClickFolderContent(folder)
+{
+	var folder_current = $("#fm-folder-curent").val();
+	if (folder_current != '') {
+		$("#fm-folder-curent").val(folder_current +'/'+ folder);
+	}
+	else {
+		$("#fm-folder-curent").val(folder);
+	}	
+	getContent();
+}
+
+function insertImage(src_image)
+{
+	//tinymce.execCommand("mceInsertContent", false, "<img src='"+ src_image +"' style='max-width:600px; max-height:600px;' />");
+	//closeModalUpload();
+	if( $('#wrapper-poster-article').length ) {
+		$("#wrapper-poster-article").html("<img src='"+ src_image +"' style='max-height:80px;' />");
+		$("#poster-article").val(src_image);
+	}
+	$('#modal-file-managemen').modal('toggle');
+}
+
+</script>

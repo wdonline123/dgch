@@ -1,0 +1,112 @@
+<div class="page-content">
+	<div class="row">
+    <div class="col-xs-12"> 
+      <div class="table-header">
+      	Apartment
+        <div class="pull-right">
+          <a href="/admin/apartment/add" title="Thêm" class="btn btn-info btn-sm bigger-100">
+            <i class="fa fa-plus"></i> Thêm
+         	</a>
+      	</div>
+    	</div>
+      
+      <div>
+        <div class="dataTables_wrapper form-inline no-footer">
+          <table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
+            <thead>
+              <tr>
+                <th class="center">No.</th>
+                <th class="center">ID</th>
+                <th>Name</th>
+                <th class="center">Picture</th>
+                <th class="center">Modify Date</th>
+                <th class="center">Create Date</th>
+                <th class="center">View</th>
+                <th class="center">Status</th>
+                <th class="center">Operator</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <?php foreach ($paginator as $item) : ?>
+              <tr>
+              	<td class="center"><?php echo ++$iOffset;?></td> 
+                <td class="center"><?php echo $item->id;?></td>
+                <td><?php echo $item->name;?></td>
+                <td class="center">
+									<?php if ( !empty($item->picture) ) : ?>
+                  	<img src="<?php echo $item->picture;?>" style="max-height:30px;" />
+                  <?php endif; ?>
+								</td>
+                <td class="center">
+                	<?php 
+										$sModifyDate = new \DateTime($item->modify_date);
+										echo $sModifyDate->format('d-m-Y');
+                	?>
+                </td>
+                <td class="center">
+                	<?php 
+										$sCreateDate = new \DateTime($item->create_date);
+										echo $sCreateDate->format('d-m-Y');
+                	?>
+                </td>
+                <td class="align-right">
+                	<?php echo $item->number_view;?>
+                </td>
+                <td class="center">
+                	<a href="javascript:;" onclick="updateStatus(<?php echo $item->id;?>, '<?php echo $item->isactive;?>')">
+                  	<?php if ( isset($aIsActive[$item['isactive']]) ) : ?>
+                  		<?php echo $aIsActive[$item['isactive']];?>
+                 		<?php endif; ?>
+                	</a>
+                </td>
+                <td class="center">
+                	<a href="/admin/apartment/edit?id=<?php echo $item->id;?>" title="Edit">
+                  	<i class="ali-icon fa fa-pencil bigger-130"></i>
+                  </a>
+                  &nbsp;&nbsp;
+                  <a href="/admin/apartment/location?id=<?php echo $item->id;?>" title="Edit">
+                  	<i class="ali-icon fa fa-map-marker bigger-130"></i>
+                  </a>
+                </td>               
+              </tr>
+              <?php endforeach; ?>  
+            </tbody>
+          </table>
+          <div class="row">          	
+            <div class="col-sm-12">
+							<?php
+								echo $this->paginationControl(            	
+									$this->paginator,
+									'sliding',
+									array('layout/paginator.phtml', 'admin'),
+									array(
+										'route' => 'admin/apartment',
+									)
+								);
+              ?>  
+          	</div>
+        	</div>
+          
+          
+        </div>
+      </div>
+        
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+
+</div>
+
+<script>
+function updateStatus(id, status)
+{
+	$.ajax({
+		url: "/admin/apartment/update-status",
+		method: "POST",
+		data: {id: id, status: status},
+		dataType:"html"
+	}).done(function(data) {
+		location.reload(); 
+	});
+}
+</script>

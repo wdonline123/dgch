@@ -1,0 +1,41 @@
+<div class="page-content">
+	<div class="row">
+    <div class="col-xs-12">
+    	<div class="page-header">
+        <h1><?php echo $this->translate('Add Information'); ?></h1>
+      </div>
+      
+      <form method="post" class="form-horizontal" autocomplete="off">
+      	<div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"> <b class="red">*</b> <?php echo $this->translate('Parent'); ?>: </label>
+          <div class="col-sm-10">
+          	<select name="parent" class="col-xs-10 col-sm-5">
+            	<option value="">-- Select --</option>
+              <?php foreach ($aParentLocation as $item) : ?>
+              	<option value="<?php echo $item['id']; ?>" <?php if ($infoData['parent'] == $item['id']) : ?>selected="selected"<?php endif; ?> >
+									<?php echo $item['name']; ?>
+              	</option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+        </div>
+        
+      	<div class="form-group">
+        	<label class="col-sm-2 control-label no-padding-right"> <b class="red">*</b> <?php echo $this->translate('Name'); ?>: </label>
+          <div class="col-sm-10">
+          	<input type="text" value="<?php echo $infoData['name']; ?>" name="name" class="col-xs-10 col-sm-5" required="required" />
+          </div>
+        </div>
+
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-2 col-md-10">
+          	<button type="submit" class="btn btn-info">
+          		<i class="ali-icon fa fa-check bigger-110"></i>
+          		<?php echo $this->translate('Save'); ?>
+          	</button>
+          </div>
+        </div>
+      </form>
+  	</div>
+	</div>
+</div>

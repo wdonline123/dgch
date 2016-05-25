@@ -1,0 +1,50 @@
+<div class="row">
+
+	<?php echo $this->render('profile/index/menu.phtml'); ?>
+  
+  <div class="col-lg-9 col-md-9 col-sm-12">
+  	<div class="panel panel-default">
+    	<div class="panel-heading">
+      	<h4 class="panel-title">
+        	<i class="fa fa-adn" aria-hidden="true"></i> 
+          Tin mua bán
+       	</h4>
+      </div>
+			<div class="panel-body">
+				<div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tiêu đề</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+            	<?php foreach ($aPosting as $index => $item) : ?>
+            	<tr>
+                <th scope="row"><?php echo $index + 1;?></th>
+                <td><?php echo $item->title;?></td>
+                <td></td>
+                <td>
+                	<?php 
+										$sCreateDate = new \DateTime($item->create_date);
+										echo $sCreateDate->format('H:i d-m-Y');
+									?>
+                </td>
+                <td></td>
+              </tr>
+            	<?php endforeach; ?>
+            </tbody>
+          </table>
+      	</div>
+        
+        <!-- Paging -->
+        
+      </div>
+ 		</div>
+    
+  </div>
+</div>

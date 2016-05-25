@@ -1,0 +1,25 @@
+<li class="comment-child-item">
+  <div class="row">
+    <div class="cmt-child-left">
+      <?php if ( !empty($comment->avatar) ) : ?>
+        <img class="img-post img-responsive" src="<?php echo $comment->avatar;?>">
+      <?php else: ?>
+        <img class="img-post img-responsive" src="/img/noavatar.gif">
+      <?php endif; ?>
+    </div>
+    <div class="cmt-child-right no-padding-left">
+    	<a href="javascript:;" class="fullname"><?php echo $comment->fullname;?></a> 
+    	-
+    	<span class="cmt-date">
+    		<?php 
+    			$sCreateDate = new \DateTime($comment->create_date);
+    			echo $sCreateDate->format('H:i d-m-Y');
+    		?> 
+    	</span>
+    	<p>
+    		<?php echo $comment->comment_content;?> 
+    	</p>
+    </div>
+  </div>
+  <hr />
+</li>

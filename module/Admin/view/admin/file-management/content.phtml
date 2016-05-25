@@ -1,0 +1,47 @@
+<div class="col-sm-2" >
+	<h3>Folders</h3>
+  <ul class="list-unstyled">
+  	<?php if ( !empty($sFolder) ): ?>
+    <li class="">
+    	<a href="javascript:;" onClick="fmClickFolderContent('..')">
+        <i class="fa fa-reply orange"></i>
+        ..
+     	</a>
+    </li>
+    <?php endif;?>
+    <?php foreach ($this->aFolder as $item) : ?>
+    <li class="">
+    	<a href="javascript:;" onClick="fmClickFolderContent('<?php echo $item;?>')">
+        <i class="fa fa-folder orange"></i>
+        <?php echo $item;?>
+     	</a>
+    </li>
+    <?php endforeach; ?>
+  </ul>
+</div>
+
+<div class="col-sm-10" style="border-left:1px solid #dddddd;">  
+  <ul class="ace-thumbnails clearfix">
+    <?php foreach ($this->aFile as $item) : ?>
+    <li>
+      <a href="javascript:;" class="cboxElement">
+        <img width="80" height="80" src="<?php echo $item;?>" alt="150x150">
+      </a>
+      <div class="tools">
+        <!--<a href="#">
+          <i class="ace-icon fa fa-times red"></i>
+        </a>-->
+        <a href="javascript:;" onclick="insertImage('<?php echo $item;?>')">
+          <i class="ace-icon fa fa-plus"></i>
+        </a>
+      </div>
+    </li>
+    <?php endforeach; ?>
+  </ul>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	$("#fm-folder-curent").val('<?php echo $sFolder;?>');
+}); 

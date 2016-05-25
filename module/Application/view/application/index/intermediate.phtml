@@ -1,0 +1,63 @@
+<div class="row">  
+  <div class="col-md-9">
+  	<?php echo $this->render('layout/search.phtml'); ?>
+    
+  	<div class="panel panel-default">
+			<div class="panel-body">
+      	<?php foreach ($paginator as $item) : ?>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+            	<a href="<?php echo $item->url;?>">
+            		<img alt="<?php echo $item->name;?>" class="img-responsive" src="<?php echo $item->picture;?>">
+            	</a>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8">
+            	<h3 class="post-title no-margin-top">
+								<a href="<?php echo $item->url;?>">
+									<?php echo $item->name;?>
+               	</a>
+							</h3>
+            	<div class="post-content">
+              	<p>
+              		- Vị trí: <?php echo $item->position;?>
+               	</p>
+                <p>
+                	- Giá thao khảo (được cung cấp bởi các thành viên): 
+                  <?php if ( (int)$item->price > 0 ) : ?>
+                  	<span class="price1"><?php echo $item->price;?> triệu ₫/m&sup2; </span>
+                  	(Chưa VAT)
+                	<?php else : ?>
+                  	Chưa cập nhật
+                  <?php endif; ?>
+                </p>
+              </div>
+            </div>
+          </div>
+          <hr />
+				<?php endforeach; ?>  
+        
+        <div class="row">
+        	<div class="col-xs-12 text-center">
+          	<?php
+							echo $this->paginationControl(            	
+								$this->paginatorClient,
+								'sliding',
+								array('layout/paginator.phtml', 'Apartment'),
+								array(
+									'route' => 'intermediate',
+									'request_uri' => $aSearch
+								)
+							);
+						?>  
+          </div>
+        </div>
+        
+			</div>
+    </div>
+	</div>
+  
+  
+  
+  <?php echo $this->render('layout/aside.phtml'); ?>
+</div>
+

@@ -1,0 +1,52 @@
+<div class="row">
+	
+	<?php echo $this->render('profile/index/menu.phtml'); ?>
+  
+  <div class="col-lg-9 col-md-9 col-sm-12">
+  	<div class="panel panel-default">
+    	<div class="panel-heading">
+      	<h4 class="panel-title">
+        	<i class="fa fa-user" aria-hidden="true"></i> 
+          Thông tin tài khoản
+       	</h4>
+      </div>
+			<div class="panel-body">
+				<div class="row">
+        	<div class="col-sm-4">
+          	<div>
+          		<img src="/img/noavatar.gif" alt="<?php echo $infoAccount['fullname']; ?>" class="img-responsive" />
+           	</div>
+            <div>
+            	<a class="btn btn-ar btn-block btn-success" href="#">Cập nhật Avatar</a>
+          	</div>
+            <div>
+            	<a class="btn btn-ar btn-block btn-warning" href="#">Sửa thông tin</a>
+          	</div>
+          </div>
+          <div class="col-sm-8">
+          	<p><?php echo $infoAccount['fullname']; ?></p>
+            <p>
+            	<i class="fa fa-envelope" aria-hidden="true"></i>
+ 							<?php echo $infoAccount['email']; ?>
+           	</p>
+            <p>
+            	<i class="fa fa-phone" aria-hidden="true"></i>
+ 							<?php echo $infoAccount['phone']; ?>
+           	</p>
+            <p>
+							<i class="fa fa-map-marker" aria-hidden="true"></i>
+							<?php echo $infoAccount['address']; ?>
+         		</p>
+            <p>
+            	<i class="fa fa-birthday-cake" aria-hidden="true"></i>
+							<?php echo $infoAccount['birthday']; ?>
+           	</p>
+            <p><?php echo $infoAccount['interests']; ?></p>
+            <p><?php echo $infoAccount['introduction']; ?></p>
+          </div>
+        </div>
+      </div>
+ 		</div>
+    
+  </div>
+</div>

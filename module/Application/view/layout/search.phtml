@@ -1,0 +1,43 @@
+<?php
+	$sKeyword = !empty($aSearch['keyword']) ? $aSearch['keyword'] : '';
+	$iCityId = isset($aSearch['city_id']) ? $aSearch['city_id'] : 0;
+	$iDistrictId = isset($aSearch['district_id']) ? $aSearch['district_id'] : 0;
+?>
+
+
+<div class="panel panel-default">
+  <div class="panel-body text-center">
+    <form name="frmSearchApartment" class="form-inline" action="<?php echo $this->url('home'); ?>">
+      <div class="form-group">
+        <input type="text" name="keyword" class="form-control" value="<?php echo $sKeyword; ?>" placeholder="Căn hộ cần tìm" />
+      </div>
+      <div class="form-group">
+      	<select class="form-control" id="city_id" name="city_id">
+        	<option value="0">-- Thành phố -- </option>              
+        </select>
+      </div>
+      
+      <div class="form-group">
+      	<select class="form-control" id="district_id" name="district_id">
+        	<option value="0">-- Quận -- </option>              
+        </select>
+      </div>
+      
+      <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	optionCity(<?php echo $iCityId; ?>);
+	optionDistrict(<?php echo $iCityId; ?>, <?php echo $iDistrictId; ?>);
+	
+	$('form[name="frmSearchApartment"] select[name="city_id"]').change(function() {
+  	var city_id = $(this).val();
+		if (city_id > 0) {
+			optionDistrict(city_id, <?php echo $iDistrictId; ?>);
+		}
+	});
+});
+</script>

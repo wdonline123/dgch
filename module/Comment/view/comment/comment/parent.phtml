@@ -1,0 +1,76 @@
+<li class="comment-item">
+  <div class="row">
+    <div class="cmt-left">
+      <?php if ( !empty($comment->avatar) ) : ?>
+        <img class="img-post img-responsive" src="<?php echo $comment->avatar;?>">
+      <?php else: ?>
+        <img class="img-post img-responsive" src="/img/noavatar.gif">
+      <?php endif; ?>
+    </div>
+    <div class="cmt-right no-padding-left">
+      <?php if ( !empty($comment->fullname) ) : ?>
+        <a href="javascript:;" class="fullname"><?php echo $comment->fullname;?></a> 
+      <?php else: ?>
+        <a href="javascript:;" class="fullname">Khách</a> 
+      <?php endif; ?>
+      -
+      <span class="price-comment">
+        Giá <?php echo $comment->price;?> triệu ₫/m&sup2; 
+      </span>
+      <p>
+        <?php echo nl2br($comment->comment_content);?> 
+      </p>
+      <?php if ( isset($infoAccount['account_id']) ) : ?>
+        <a href="javascript:;" onclick="showChildComment(<?php echo $comment->comment_id;?>)">Trả lời</a> 
+      <?php else: ?>
+        <a href="javascript:;" data-toggle="modal" data-target="#modal-account-login">Trả lời</a> 
+      <?php endif; ?>
+      - 
+      <span class="cmt-date">
+        <?php 
+          $sCreateDate = new \DateTime($comment->create_date);
+          echo $sCreateDate->format('H:i d-m-Y');
+        ?>
+      </span>
+    </div>
+  </div>
+  
+  <!-- Start child comment -->
+  <div class="row">
+    <div class="col-sm-12">
+      <ul class="list-unstyled comment-child-list" data-id="<?php echo $comment->comment_id;?>">
+        <?php if ($comment->number_comment > 0) : ?>
+        <li class="comment-child-item">
+          <div class="row">
+            <div class="col-sm-12">
+              <a href="javascript:;" onclick="getListChild(<?php echo $comment->comment_id;?>)">
+                <i class="fa fa-reply"></i>
+                Có <?php echo $comment->number_comment;?> khách hàng đã trả lời
+              </a>
+            </div>
+          </div>
+        </li>
+        <?php endif; ?>
+      </ul>
+      
+      <div class="comment-child-form" data-id="<?php echo $comment->comment_id;?>">
+        <div class="row">
+          <div class="cmt-child-left">
+            <img class="img-post img-responsive" src="/img/noavatar.gif">
+          </div>
+          <div class="cmt-child-right no-padding-left">
+            <form id="frmChildComment-<?php echo $comment->comment_id;?>" class="form-horizontal frm-child-comment">
+              <textarea name="comment_content" class="form-control"></textarea>
+              <input type="hidden" name="comment_parent" value="<?php echo $comment->comment_id;?>" />
+              <input type="hidden" name="object_id" value="<?php echo $comment->object_id;?>" />
+              <input type="hidden" name="object_type" value="<?php echo $comment->object_type;?>" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End child comment-->
+  <hr />
+  
+</li>

@@ -1,0 +1,31 @@
+<ul class="list-unstyled" id="list-comment">
+	<?php foreach ($aComment as $item) : ?>
+	<li class="comment-item">
+  	
+  	<div class="row">
+    	<div class="cmt-left">
+				<img class="img-post img-responsive" src="/img/noavatar.gif">
+			</div>
+      <div class="cmt-right no-padding-left">
+        <a href="javascript:;" class="fullname">Khách</a> 
+        -
+        <span class="price-comment">
+        	Giá <?php echo $item->price;?> triệu ₫/m&sup2; 
+     		</span>
+        <p>
+        	<?php echo $item->comment_content;?> 
+        </p>
+        <a href="javascript:;">Trả lời</a> 
+        - 
+        <span class="cmt-date">
+					<?php 
+						$sCreateDate = new \DateTime($item->create_date);
+						echo $sCreateDate->format('H:i d-m-Y');
+         	?>
+      </div>
+    </div>
+  	<hr />
+    
+	</li>
+  <?php endforeach; ?>
+</ul>

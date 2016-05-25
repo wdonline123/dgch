@@ -1,0 +1,281 @@
+<div class="row">  
+  <div class="col-md-9">
+  	<?php echo $this->render('layout/search.phtml'); ?>
+    
+  	<div class="panel panel-default">
+			<div class="panel-body">
+      	<h3 class="page-header no-margin-top">
+					<?php echo $infoApartment->name;?>
+       	</h3>
+        <div class="row">
+          <div class="col-sm-6">
+          	- Giá thao khảo (được cung cấp bởi các thành viên): <br />
+            - Ngày cập nhật : 
+						<?php 
+            	$sDate = new \DateTime($infoApartment->price_date);
+             	echo $sDate->format('d-m-Y');
+						?>
+          </div>
+          <div class="col-sm-6 ">
+          	<?php if ($infoApartment->price > 0) : ?>
+              <span class="price-detail">
+                <?php echo $infoApartment->price;?> triệu ₫/m&sup2;
+              </span>
+              (Chưa VAT)
+          	<?php endif; ?>
+          </div>
+        </div>
+        
+        <ul class="nav nav-tabs">
+          <li class="active" >
+            <a data-toggle="tab" href="#content-introduction">Giới thiệu</a>
+          </li>
+          <li role="presentation">
+            <a href="#content-utility">Tiện ích</a>
+          </li>
+          <li role="presentation">
+            <a data-toggle="tab" href="#content-map">
+              <i class="fa fa-map"></i> Bản đồ
+            </a>
+          </li>
+          <li role="presentation">
+            <a data-toggle="tab" href="#content-image">
+              <i class="fa fa-photo"></i> Hình ảnh
+            </a>
+          </li>
+        </ul>
+        
+        <div class="tab-content">
+          <div class="tab-pane active" id="content-introduction">
+						<?php echo $infoApartment->introduction;?>
+          </div>
+          <div class="tab-pane" id="content-utility">
+						<?php echo $infoApartment->utility;?>
+          </div>
+          <div class="tab-pane" id="content-map">
+          	Đang cập nhật
+          </div>
+          
+          <div class="tab-pane" id="content-image">
+          	<div class="row">
+            	<div class="col-xs-12">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <?php foreach ($aPicture as $key => $val) : ?>
+                      <?php if ($key == 0) : ?>
+                        <li data-target="#myCarousel" data-slide-to="<?php echo $key; ?>" class="active"></li>
+                      <?php else: ?>
+                        <li data-target="#myCarousel" data-slide-to="<?php echo $key; ?>"></li>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </ol>
+                  
+                  <div class="carousel-inner" role="listbox">
+                    <?php foreach ($aPicture as $key => $val) : ?>
+                      <?php if ($key == 0) : ?>
+                        <div class="item active">
+                          <img src="<?php echo $val; ?>" alt="">
+                        </div>
+                      <?php else: ?>
+                        <div class="item">
+                          <img src="<?php echo $val; ?>" alt="">
+                        </div>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </div>
+                  
+                  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+            	</div>	
+            </div>
+          </div>
+          
+        </div>
+        
+        <div class="row">
+        	<div class="col-sm-12">
+            <div class="alert alert-info">
+              Mọi thông tin liên hệ về bài viết hoặc ý kiến đóng góp về website 
+              <a href="http://dinhgiacanho.vn">http://dinhgiacanho.vn</a>
+              xin gửi về địa chỉ email : 
+              <a rel="nofollow" href="mailto:support@dinhgiacanho.vn" title="support@dinhgiacanho.vn">support@dinhgiacanho.vn</a>.
+              Hoặc vào form <a href="http://dinhgiacanho.vn/lien-he">liên hệ</a> của Website.
+            </div>
+       		</div>
+      	</div>
+        
+        <div class="social-topic">
+        	<?php if ( isset($infoAccount['account_id']) ) : ?>
+            <a href="javascript:;" id="label-like-apartment" onclick="isLike(<?php echo $infoApartment->id;?>, 1)">
+            	<i class="fa fa-thumbs-up"></i> Like
+         		</a>
+          <?php else: ?> 
+            <a href="javascript:;" data-toggle="modal" data-target="#modal-account-login">
+            	<i class="fa fa-thumbs-up"></i> Like
+         		</a>
+          <?php endif; ?>
+        	
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        	<a href="javascript:;" onclick="onFocusComment()">
+            <i class="fa fa-comments"></i> Ý kiến khách hàng
+         	</a>
+        	<div class="pull-right">
+          	<a href="javascript:;" id="number-like-apartment">
+              <i class="fa fa-thumbs-up"></i>
+              <?php echo $infoApartment->number_like;?> 
+          	</a>
+          	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:;">
+          		<i class="fa fa-comments"></i>
+            	<?php echo $infoApartment->number_comment;?> 
+          	</a>
+          </div>
+     		</div>
+        
+        <hr />
+        
+        <section id="container-comment">
+          <ul class="list-unstyled" id="comment-list">
+						<?php foreach ($aComment as $comment) : ?>
+            	<?php 
+								echo $this->partial('comment/comment/parent.phtml', array(
+									'comment' => $comment,
+									'infoAccount' => $infoAccount,
+								)); 
+							?>
+            <?php endforeach; ?>
+          </ul>
+        </section>
+        
+        <hr />
+        
+        <div class="panel panel-default">
+          <div class="panel-heading">Theo bạn giá căn hộ này khoản bao nhiêu?</div>
+          <div class="panel-body">
+            <form id="frmComment" class="form-horizontal" role="form">
+            	<div class="form-group has-error" id="comment-row-error" style="display:none;">
+              	<label class="control-label col-sm-2"></label>
+                <div class="col-sm-7">
+               		<label class="control-label" for="commentError"></label>
+               	</div>
+              </div>
+
+              <div class="form-group">
+                  <label class="control-label col-sm-2">Giá</label>
+                  <div class="col-sm-3">
+                    <input type="text" name="price" placeholder="Giá (đơn vị triệu ₫/m&sup2;)" class="form-control">
+                  </div>
+                  <div class="col-sm-7">
+                    <p class="help-block">
+                      Giá phải lớn hơn <?php echo $infoApartment->min_price;?> và nhỏ hơn <?php echo $infoApartment->max_price;?> triệu ₫/m&sup2;, (chưa VAT)
+                    </p>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2">Thông điệp</label>
+                <div class="col-sm-10">
+                  <textarea name="comment_content" class="form-control"></textarea>
+                </div>
+              </div>
+              <input type="hidden" name="min_price" value="<?php echo $infoApartment->min_price;?>" />
+              <input type="hidden" name="max_price" value="<?php echo $infoApartment->max_price;?>" />
+              <input type="hidden" name="object_id" value="<?php echo $infoApartment->id;?>" />
+              <input type="hidden" name="object_type" value="1" />
+              <button class="btn btn-ar pull-right btn-primary" type="button" onclick="addComment()">Submit</button>
+            </form>
+          </div>
+        </div>
+        
+        
+        
+			</div>
+    </div>
+    
+    
+	</div>
+  
+  <?php echo $this->render('layout/aside.phtml'); ?>
+ 
+</div>
+
+<?php 
+	echo $this->inlineScript()
+											->prependFile($this->basePath() . '/js/like.js')
+											->prependFile($this->basePath() . '/js/comment.js');
+?>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script>
+
+var bolSubmit = true;
+
+$(document).ready(function(){
+	$('.nav-tabs a:first').tab('show');
+	$('.nav-tabs a').click(function(e){
+		//e.preventDefault();
+		$(this).tab('show');
+		
+		<?php if ( !empty($infoApartment->latitude) && !empty($infoApartment->longitude) ) : ?>
+		if ( $(this).attr("href") == '#content-map' ) {
+			showMap();
+		}
+		<?php endif; ?>
+		
+	});
+	
+	$('#container-comment').on('focus', 'textarea', function(e) {
+		var frmChildComment = $(this).parent().attr('id');
+		$('#' + frmChildComment).keypress(function(e) {
+			if ( e.which == 13 && !e.shiftKey && bolSubmit && jQuery.support.submitBubbles ) {
+				e.preventDefault();
+				bolSubmit = false;
+				$.ajax({
+					type: "POST",
+					cache: false,
+					url: '/comment/add-child',
+					data: $('#' + frmChildComment).serialize()
+				})
+				.done(function( comment_id ) {
+					var parent_id = $('#'+ frmChildComment +' input[name="comment_parent"]').val();
+					document.getElementById(frmChildComment).reset();
+					$('#'+ frmChildComment +' textarea').blur();
+					bolSubmit = true;
+					childComment(comment_id, parent_id);
+				});
+			}
+		});
+	});
+		
+});
+
+function showMap()
+{
+	$('#content-map').css( "height", "400px" );
+	<?php if ( !empty($infoApartment->latitude) && !empty($infoApartment->longitude) ) : ?>
+		var location = {lat: <?php echo $infoApartment->latitude;?>, lng: <?php echo $infoApartment->longitude;?>};	
+	<?php else: ?>
+		var location = {lat: 0, lng: 0};	
+	<?php endif; ?>
+	var map = new google.maps.Map(document.getElementById('content-map'), {
+		center: location,
+		scaleControl: true,
+		zoom: 15
+	});
+	
+	var contentString = '<b><?php echo $this->escapeHtml($infoApartment->name); ?></b>' +
+					'<br /><?php echo $this->escapeHtml($infoApartment->position); ?>';
+	var infowindow = new google.maps.InfoWindow;
+	infowindow.setContent(contentString);
+	
+	var marker = new google.maps.Marker({map: map, position: location});
+	infowindow.open(map, marker);
+}
+
+</script>

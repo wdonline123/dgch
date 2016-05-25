@@ -1,0 +1,74 @@
+<div class="page-content">
+	<div class="row">
+    <div class="col-xs-12"> 
+      <div class="table-header">User List
+      	<div class="pull-right">
+          <a href="/admin/user/add" title="Add" class="btn btn-info btn-sm bigger-100">
+            <i class="fa fa-plus"></i> Add
+         	</a>
+      	</div>
+      </div>
+      
+      <div>
+        <div class="dataTables_wrapper form-inline no-footer">
+          <table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
+            <thead>
+              <tr>
+                <th class="center">No.</th>
+                <th>Fullname</th>
+                <th>Username</th>
+                <th>Group</th>
+                <th class="center">Status</th>
+                <th class="center">Operation</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              <?php foreach ($aResult as $key => $item) : ?>
+              <tr>
+              	<td class="center"><?php echo $key + 1;?></td> 
+                <td><?php echo $item->fullname;?></td>
+                <td><?php echo $item->username;?></td>
+                <td>
+                	<?php if ( isset($aGroup[$item->group_id]) ) : ?>
+										<?php echo $aGroup[$item->group_id];?>
+                  <?php endif; ?>
+                </td>
+                <td class="center">
+                	<a href="javascript:;" onclick="updateStatus(<?php echo $item->id;?>, '<?php echo $item->status;?>')">
+                  	<?php if ( isset($aStatus[$item->status]) ) : ?>
+                  		<?php echo $aStatus[$item->status];?>
+                 		<?php endif; ?>
+                	</a>
+                </td>
+                <td class="center">
+                	<a href="/admin/user/edit?id=<?php echo $item->id;?>" title="Edit">
+                  	<i class="ali-icon fa fa-pencil bigger-130"></i>
+                  </a>
+                </td>               
+              </tr>
+              <?php endforeach; ?>  
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+        
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+
+</div>
+
+<script>
+function updateStatus(id, status)
+{
+	$.ajax({
+		url: "/admin/user/update-status",
+		method: "POST",
+		data: {id: id, status: status},
+		dataType:"html"
+	}).done(function(data) {
+		location.reload(); 
+	});
+}
+</script>
